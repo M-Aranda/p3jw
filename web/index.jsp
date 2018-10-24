@@ -25,9 +25,15 @@
 
         <h1>Alumnos</h1>
         <br>
-        <h4>Alumnos: <%= da.getCantAlumnos()%></h4>
-        <h4>Hombres: <%= da.getCantHombres()%></h4>
-        <h4>Mujeres: <%= da.getCantMujeres()%></h4>
+        <h3>Alumnos: <%= da.getCantAlumnos()%></h3>
+        <h3>Hombres: <%= da.getCantHombres()%></h3>
+        <h3>Mujeres: <%= da.getCantMujeres()%></h3>
+        <br>
+        <h3>Alumnos de Rancagua: <%=da.getCantRancaguinos()%></h3>
+        <h3>Alumnos de Rengo: <%= da.getCantRenguinos()%> </h3>
+        <h3>Alumnos de Santa Cruz: <%=da.getCantSantaCruzenios()%></h3>
+
+
 
         <table border="0">
             <thead>
@@ -35,6 +41,7 @@
                     <th><h5>ID</h4></th>
                     <th><h5><a href="ordenarPorNombre.jsp">Nombre</a></h5></th>
                     <th><h5>Género</h5></th>
+                    <th></th>
                     <th><h5>Telefono</h5></th>
                     <th><h5>Correo</h5></th>
                     <th><h5><a href="ordenarPorCiudad.jsp">Ciudad</a></h5></th>
@@ -85,13 +92,31 @@
                     }
                 %>
                 <td> <%= genero%></td>
+                <td></td>
                 <td> <%= al.getTelefono()%></td>
                 <td> <%= al.getCorreo()%></td>
                 <td> <%= al.getNombreCiudad()%></td>
+                <td>
+                    <form action="eliminarAlumno.do"method="POST">
+                        <input type="button" value="Eliminar" hidden="<%=al.getId()%>" onclick="alertar()">
+                    </form>
+                </td>
 
             </tr>        
             <% }%>    
         </tbody>
+
+        <script>
+            function alertar (int id){
+                
+                ClaseAlumnoAlternativa caa=dcaa.getAlumnoPorId(id);
+                
+                confirm("Desea eliminar a "+caa+"?");
+                if(confirm.dia);
+                dcaa.delete(id);
+            }
+
+        </script>
     </table>
 
 

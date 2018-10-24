@@ -57,7 +57,7 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
             }
 
         }
-        
+
         close();
         return lista;
     }
@@ -81,6 +81,7 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
             cant = rs.getInt(1);
         }
 
+        close();
         return cant;
     }
 
@@ -92,6 +93,7 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
             cant = rs.getInt(1);
         }
 
+        close();
         return cant;
     }
 
@@ -103,6 +105,37 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
             cant = rs.getInt(1);
         }
 
+        close();
+        return cant;
+    }
+
+    public int getCantRancaguinos() throws SQLException {
+        int cant = 0;
+        ResultSet rs = ejecutar("SELECT COUNT(0) FROM alumno WHERE fk_ciudad=" + 1 + " ;");
+        if (rs.next()) {
+            cant = rs.getInt(1);
+        }
+        close();
+        return cant;
+    }
+
+    public int getCantRenguinos() throws SQLException {
+        int cant = 0;
+        ResultSet rs = ejecutar("SELECT COUNT(0) FROM alumno WHERE fk_ciudad=" + 2 + " ;");
+        if (rs.next()) {
+            cant = rs.getInt(1);
+        }
+        close();
+        return cant;
+    }
+
+    public int getCantSantaCruzenios() throws SQLException {
+        int cant = 0;
+        ResultSet rs = ejecutar("SELECT COUNT(0) FROM alumno WHERE fk_ciudad=" + 3 + " ;");
+        if (rs.next()) {
+            cant = rs.getInt(1);
+        }
+        close();
         return cant;
     }
 

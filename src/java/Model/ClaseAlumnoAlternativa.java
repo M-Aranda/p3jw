@@ -78,6 +78,11 @@ public class ClaseAlumnoAlternativa {
     public void setNombreCiudad(String nombreCiudad) {
         this.nombreCiudad = nombreCiudad;
     }
+
+    @Override
+    public String toString() {
+        return "ClaseAlumnoAlternativa{" + "id=" + id + ", nombre=" + nombre + ", genero=" + genero + ", telefono=" + telefono + ", correo=" + correo + ", nombreCiudad=" + nombreCiudad + '}';
+    }
     
     
     
