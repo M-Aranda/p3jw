@@ -24,40 +24,47 @@ public class DAO_Ciudad extends Conexion implements DAO<Ciudad> {
 
     @Override
     public void create(Ciudad ob) throws SQLException {
-        ejecutar("INSERT INTO ciduad VALUES (NULL, '"+ob.getNombre()+"'; )");
+        ejecutar("INSERT INTO ciduad VALUES (NULL, '" + ob.getNombre() + "'; )");
     }
 
     @Override
     public List<Ciudad> read() throws SQLException {
-        List<Ciudad> lista= new ArrayList<Ciudad>();
-        ResultSet rs=ejecutar("SELECT * FROM CIUDAD");
-        
+        List<Ciudad> lista = new ArrayList<Ciudad>();
+        ResultSet rs = ejecutar("SELECT * FROM CIUDAD");
+
         Ciudad c;
-        while(rs.next()){
-            c=new Ciudad();
+        while (rs.next()) {
+            c = new Ciudad();
             c.setId(rs.getInt(1));
             c.setNombre(rs.getString(2));
             lista.add(c);
-            
+
         }
-        
-        
-        
+
         return lista;
-        
+
     }
 
     @Override
     public void update(Ciudad ob) throws SQLException {
-        ejecutar("UPDATE ciudad SET nombre='"+ob.getNombre()+"' WHERE id="+ob.getId()+"");
+        ejecutar("UPDATE ciudad SET nombre='" + ob.getNombre() + "' WHERE id=" + ob.getId() + "");
     }
 
     @Override
     public void delete(int id) throws SQLException {
-        ejecutar("DELETE FROM ciudad WHERE id="+id+"");
+        ejecutar("DELETE FROM ciudad WHERE id=" + id + "");
     }
-    
-    
-    
-    
+
+    public Ciudad getCiudadPorNombre(String nombre) throws SQLException {
+
+        Ciudad c = new Ciudad();
+        ResultSet rs = ejecutar("SELECT * FROM ciudad WHERE nombre='" + nombre + "'");
+        if (rs.next()) {
+            c.setId(rs.getInt(1));
+            c.setNombre(rs.getString(2));
+        }
+
+        return c;
+    }
+
 }

@@ -1,5 +1,9 @@
 
 
+<%@page import="Model.Ciudad"%>
+<%@page import="Model.DAO.DAO_Ciudad"%>
+<%@page import="Model.DAO.DAO_ClaseAlumnoAlternativa"%>
+<%@page import="Model.ClaseAlumnoAlternativa"%>
 <%@page import="Model.Alumno"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.DAO.DAO_Alumno"%>
@@ -12,6 +16,8 @@
 
         <link rel="stylesheet" href="style.css" type="text/css">
 
+
+
     </head>
     <body>
         <%DAO_Alumno da = new DAO_Alumno();%>
@@ -23,48 +29,73 @@
         <h4>Hombres: <%= da.getCantHombres()%></h4>
         <h4>Mujeres: <%= da.getCantMujeres()%></h4>
 
-        <h5>ID</h4>
-        <h5>Nombre</h5>
-        <h5>Género</h5>
-        <h5>Telefono</h5>
-        <h5>Correo</h5>
-        <h5>Ciudad</h5>
-        <h5>Accion</h5>
+        <table border="0">
+            <thead>
+                <tr>
+                    <th><h5>ID</h4></th>
+                    <th><h5>Nombre</h5></th>
+                    <th><h5>Género</h5></th>
+                    <th><h5>Telefono</h5></th>
+                    <th><h5>Correo</h5></th>
+                    <th><h5>Ciudad</h5></th>
+                    <th><h5>Accion</h5></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+            <form action="crear.do" method="POST">
+                <td>Id</td>
+                <td><input type="text" name="nombre" required></td>
+                <td><input type="radio" name="rbtGenero">Masculino</td>
+                <td><input type="radio" name="rbtGenero">Femenino</td>
+                <td><input type="text" name="telefono" required></td>
+                <td><input type="text" name="correo" required></td>
+                <td>
+                    <select name="cboCiudad">
+                        <%DAO_Ciudad dc = new DAO_Ciudad();
+                        List<Ciudad> listaDeCiudades=dc.read();
+                        
+                        for (Ciudad ciu : listaDeCiudades) {%>
+                                <option><%= ciu.getNombre()%></option> 
+                            <%}%>                     
+                    </select>
+                </td>
+                <td><input type="submit" value="Crear"></td>
+                </tr>
+            </form>
 
-        <form action="crear.do" method="POST">
-            <h5>ID</h4>
-                <h5>Nombre</h5>
-                <input type="text" name="nombre" required>
+            <%//List<Alumno> listaAlumnos = da.read();
+                DAO_ClaseAlumnoAlternativa dcaa = new DAO_ClaseAlumnoAlternativa();
+                List<ClaseAlumnoAlternativa> listaAlternativa = dcaa.read();
 
-                <input type="radio" name="rbtMasculino">
-                <input type="radio" name="rbtFemenino">
-                <input type="text" name="telefono" required>
-                <input type="text" name="correo" required>
+                for (ClaseAlumnoAlternativa al : listaAlternativa) {%>
+            <tr>
+                <td>  <%= al.getId()%></td>
+                <td> <%= al.getNombre()%></td>
+                <%
+                    String genero = "";
+                    if (al.getGenero() == 1) {
+                        genero = "Masculino";
+                    } else if (al.getGenero() == 0) {
+                        genero = "Femenino";
+                    }
+                %>
+                <td> <%= genero%></td>
+                <td> <%= al.getTelefono()%></td>
+                <td> <%= al.getCorreo()%></td>
+                <td> <%= al.getNombreCiudad()%></td>
 
-                <input type="submit" value="Crear">
-                </form>
-
-
-                <table border="1">
-                    <%List<Alumno> listaAlumnos = da.read();
-
-                        for (Alumno al : listaAlumnos) {%>
-                    <tr>
-                        <td>  <%= al.getId()%></td>
-                        <td>  <%= al.getId()%></td>
-                        <td> <%= al.getNombre()%></td>
-                        <td> <%= al.isEsHombre()%></td>
-                        <td> <%= al.getTelefono()%></td>
-                        <td> <%= al.getCorreo()%></td>
-                        <td> <%= al.getCiu().getNombre()%></td>
-                       
-                    </tr>        
+            </tr>        
+            <% }%>    
+        </tbody>
+    </table>
 
 
-                    <% }%>    
-
-                </table>
 
 
-                </body>
-                </html>
+
+
+
+
+</body>
+</html>
