@@ -33,17 +33,17 @@
             <thead>
                 <tr>
                     <th><h5>ID</h4></th>
-                    <th><h5>Nombre</h5></th>
+                    <th><h5><a href="ordenarPorNombre.jsp">Nombre</a></h5></th>
                     <th><h5>Género</h5></th>
                     <th><h5>Telefono</h5></th>
                     <th><h5>Correo</h5></th>
-                    <th><h5>Ciudad</h5></th>
+                    <th><h5><a href="ordenarPorCiudad.jsp">Ciudad</a></h5></th>
                     <th><h5>Accion</h5></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-            <form action="crear.do" method="POST">
+            <form action="crearAlumno.do" method="POST">
                 <td>Id</td>
                 <td><input type="text" name="nombre" required></td>
                 <td><input type="radio" name="rbtGenero">Masculino</td>
@@ -53,11 +53,11 @@
                 <td>
                     <select name="cboCiudad">
                         <%DAO_Ciudad dc = new DAO_Ciudad();
-                        List<Ciudad> listaDeCiudades=dc.read();
-                        
-                        for (Ciudad ciu : listaDeCiudades) {%>
-                                <option><%= ciu.getNombre()%></option> 
-                            <%}%>                     
+                            List<Ciudad> listaDeCiudades = dc.read();
+
+                            for (Ciudad ciu : listaDeCiudades) {%>
+                        <option><%= ciu.getNombre()%></option> 
+                        <%}%>                     
                     </select>
                 </td>
                 <td><input type="submit" value="Crear"></td>
@@ -67,6 +67,10 @@
             <%//List<Alumno> listaAlumnos = da.read();
                 DAO_ClaseAlumnoAlternativa dcaa = new DAO_ClaseAlumnoAlternativa();
                 List<ClaseAlumnoAlternativa> listaAlternativa = dcaa.read();
+
+                if (request.getSession().getAttribute("listaOrdenada") != null) {
+                    listaAlternativa = (List<ClaseAlumnoAlternativa>) request.getSession().getAttribute("listaOrdenada");
+                }
 
                 for (ClaseAlumnoAlternativa al : listaAlternativa) {%>
             <tr>

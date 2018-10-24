@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author maranda
  */
-@WebServlet(name = "CrearServlet", urlPatterns = {"/crear.do"})
-public class CrearServlet extends HttpServlet {
+@WebServlet(name = "CrearServlet", urlPatterns = {"/crearAlumno.do"})
+public class CrearAlumnoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,7 +45,22 @@ public class CrearServlet extends HttpServlet {
             Alumno a = new Alumno();
             String nombre = request.getParameter("nombre");
             String genero = request.getParameter("rbtGenero");
-            Boolean generoAIngresar = true;//esto siempre 
+            
+            /*
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet NewServlet</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Genero es " + genero + "</h1>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+            */
+            
+            Boolean generoAIngresar = true;
             if (genero.equals("Masculino")) {
                 generoAIngresar = true;
 
@@ -71,9 +86,9 @@ public class CrearServlet extends HttpServlet {
 
             response.sendRedirect("index.jsp");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CrearServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CrearAlumnoServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(CrearServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CrearAlumnoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

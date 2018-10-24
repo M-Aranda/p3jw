@@ -40,7 +40,7 @@ public class DAO_Ciudad extends Conexion implements DAO<Ciudad> {
             lista.add(c);
 
         }
-
+        close();
         return lista;
 
     }
@@ -64,6 +64,7 @@ public class DAO_Ciudad extends Conexion implements DAO<Ciudad> {
             c.setNombre(rs.getString(2));
         }
 
+        close();
         return c;
     }
 

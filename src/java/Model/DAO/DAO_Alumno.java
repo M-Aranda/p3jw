@@ -57,7 +57,8 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
             }
 
         }
-
+        
+        close();
         return lista;
     }
 
