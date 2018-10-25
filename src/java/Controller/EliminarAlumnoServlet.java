@@ -38,7 +38,8 @@ public class EliminarAlumnoServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             
             DAO_ClaseAlumnoAlternativa dca= new DAO_ClaseAlumnoAlternativa() ;
-
+            int idAlumnoAEliminar=Integer.parseInt(request.getParameter("id"));
+            dca.delete(idAlumnoAEliminar);
             response.sendRedirect("index.jsp");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EliminarAlumnoServlet.class.getName()).log(Level.SEVERE, null, ex);

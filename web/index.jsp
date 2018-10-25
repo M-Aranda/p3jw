@@ -53,8 +53,8 @@
             <form action="crearAlumno.do" method="POST">
                 <td>Id</td>
                 <td><input type="text" name="nombre" required></td>
-                <td><input type="radio" name="rbtGenero">Masculino</td>
-                <td><input type="radio" name="rbtGenero">Femenino</td>
+                <td><input type="radio" name="rbtGenero" value="Masculino">Masculino</td>
+                <td><input type="radio" name="rbtGenero" value="Femenino">Femenino</td>
                 <td><input type="text" name="telefono" required></td>
                 <td><input type="text" name="correo" required></td>
                 <td>
@@ -97,26 +97,43 @@
                 <td> <%= al.getCorreo()%></td>
                 <td> <%= al.getNombreCiudad()%></td>
                 <td>
-                    <form action="eliminarAlumno.do"method="POST">
-                        <input type="button" value="Eliminar" hidden="<%=al.getId()%>" onclick="alertar()">
+                    <!-- <button onclick="confirmarEliminacion()" name="ide" id="ide" value="// al.getId()" type="hidden">Eliminar</button> -->
+                    <!--<input id="//=al.getId()" type="button" value="Eliminar" onclick="Eliminar()"> -->
+                    <form id="eliminacion" action="eliminarAlumno.do" method="POST">
+                        <input type="hidden" name="id" id="id" value="<%= al.getId()%>"/>
+                        <input type="hidden" name="datos" id="datos" value="<%=al%>">
+                        <input type="submit" value="Eliminar" onclick="confirmacion()"/>
                     </form>
                 </td>
-
             </tr>        
             <% }%>    
         </tbody>
 
+        <script src="js/JQuery.js"></script>
         <script>
-            function alertar (int id){
-                
-                ClaseAlumnoAlternativa caa=dcaa.getAlumnoPorId(id);
-                
-                confirm("Desea eliminar a "+caa+"?");
-                if(confirm.dia);
-                dcaa.delete(id);
-            }
+                            function confirmacion() {
+                                $('#eliminacion').submit(function () {
+                                    var seleccion = $("#datos").val();
+                                    
+                                    var r = confirm("Seguro que quiere eliminar a " + seleccion);
+                                    if(r){
+                                        return true;
+                                    }else if(!r){
+                                        return false;
+                                    }
+                                    // return r; si se apreto cancelar es falso y no pasa nada, si es true se hace el submit
+                                });
+
+                            }
+
+
+
 
         </script>
+
+
+
+
     </table>
 
 
