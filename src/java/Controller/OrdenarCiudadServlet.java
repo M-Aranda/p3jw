@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.ClaseAlumnoAlternativa;
-import Model.DAO.DAO_ClaseAlumnoAlternativa;
+import Model.Alumno;
+import Model.DAO.DAO_Alumno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -43,13 +43,13 @@ public class OrdenarCiudadServlet extends HttpServlet {
             
             String orden = request.getParameter("cboOrdenCiudad");
             
-            List<ClaseAlumnoAlternativa> lista = new ArrayList<ClaseAlumnoAlternativa>();
-            DAO_ClaseAlumnoAlternativa dca = new DAO_ClaseAlumnoAlternativa();
+            List<Alumno> lista = new ArrayList<Alumno>();
+            DAO_Alumno da = new DAO_Alumno();
             
             if (orden.equals("Ascendente")) {
-                lista = dca.listarPorCiudad("ASC");
+                lista = da.listarPorCiudad("ASC");
             } else if (orden.equals("Descendente")) {
-                lista = dca.listarPorCiudad("DESC");
+                lista = da.listarPorCiudad("DESC");
                 
             }
             

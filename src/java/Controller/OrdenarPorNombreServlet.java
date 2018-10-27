@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.ClaseAlumnoAlternativa;
-import Model.DAO.DAO_ClaseAlumnoAlternativa;
+import Model.Alumno;
+import Model.DAO.DAO_Alumno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -41,14 +41,14 @@ public class OrdenarPorNombreServlet extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
 
-            DAO_ClaseAlumnoAlternativa dca = new DAO_ClaseAlumnoAlternativa();
+            DAO_Alumno da = new DAO_Alumno();
             String orden = request.getParameter("cboOrdenNombre");
 
-            List<ClaseAlumnoAlternativa> lista = new ArrayList<ClaseAlumnoAlternativa>();
+            List<Alumno> lista = new ArrayList<Alumno>();
             if (orden.equals("Ascendente")) {
-                lista=dca.listarPorNombre("ASC");
+                lista=da.listarPorNombre("ASC");
             } else if (orden.equals("Descendente")) {
-                lista=dca.listarPorNombre("DESC");
+                lista=da.listarPorNombre("DESC");
             }
             
             request.getSession().setAttribute("listaOrdenada", lista);

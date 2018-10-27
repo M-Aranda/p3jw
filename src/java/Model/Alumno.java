@@ -77,6 +77,19 @@ public class Alumno {
     public void setCiu(Ciudad ciu) {
         this.ciu = ciu;
     }
+
+    @Override
+    public String toString() {
+        
+        String genero="";
+        
+        if (esHombre==true){
+            genero="Masculino";
+        }else if(esHombre==false){
+            genero="Femenino";
+        }
+        return "Alumno: " + "Id= " + id + ", Nombre= " + nombre + ", Genero= " + genero + ", Telefono= " + telefono + ", Correo= " + correo + ", Ciudad= " + ciu.getNombre();
+    }
     
     
     

@@ -2,8 +2,6 @@
 
 <%@page import="Model.Ciudad"%>
 <%@page import="Model.DAO.DAO_Ciudad"%>
-<%@page import="Model.DAO.DAO_ClaseAlumnoAlternativa"%>
-<%@page import="Model.ClaseAlumnoAlternativa"%>
 <%@page import="Model.Alumno"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.DAO.DAO_Alumno"%>
@@ -71,37 +69,37 @@
                 </tr>
             </form>
 
-            <%//List<Alumno> listaAlumnos = da.read();
-                DAO_ClaseAlumnoAlternativa dcaa = new DAO_ClaseAlumnoAlternativa();
-                List<ClaseAlumnoAlternativa> listaAlternativa = dcaa.read();
+            <%
+                List<Alumno> listaAlumnos = da.read();
 
                 if (request.getSession().getAttribute("listaOrdenada") != null) {
-                    listaAlternativa = (List<ClaseAlumnoAlternativa>) request.getSession().getAttribute("listaOrdenada");
+                    listaAlumnos = (List<Alumno>) request.getSession().getAttribute("listaOrdenada");
                 }
-
-                for (ClaseAlumnoAlternativa al : listaAlternativa) {%>
+                  for (Alumno a : listaAlumnos)
+            
+      {%>
             <tr>
-                <td>  <%= al.getId()%></td>
-                <td> <%= al.getNombre()%></td>
+                <td>  <%= a.getId()%></td>
+                <td> <%= a.getNombre()%></td>
                 <%
                     String genero = "";
-                    if (al.getGenero() == 1) {
+                    if (a.isEsHombre() == true) {
                         genero = "Masculino";
-                    } else if (al.getGenero() == 0) {
+                    } else if (a.isEsHombre() == false) {
                         genero = "Femenino";
                     }
                 %>
                 <td> <%= genero%></td>
                 <td></td>
-                <td> <%= al.getTelefono()%></td>
-                <td> <%= al.getCorreo()%></td>
-                <td> <%= al.getNombreCiudad()%></td>
+                <td> <%= a.getTelefono()%></td>
+                <td> <%= a.getCorreo()%></td>
+                <td> <%= a.getCiu().getNombre()%></td>
                 <td>
                     <!-- <button onclick="confirmarEliminacion()" name="ide" id="ide" value="// al.getId()" type="hidden">Eliminar</button> -->
                     <!--<input id="//=al.getId()" type="button" value="Eliminar" onclick="Eliminar()"> -->
                     <form id="eliminacion" action="eliminarAlumno.do" method="POST">
-                        <input type="hidden" name="id" id="id" value="<%= al.getId()%>"/>
-                        <input type="hidden" name="datos" id="datos" value="<%=al%>">
+                        <input type="hidden" name="id" id="id" value="<%= a.getId()%>"/>
+                        <input type="hidden" name="datos" id="datos" value="<%=a%>">
                         <input type="submit" value="Eliminar" onclick="confirmacion()"/>
                     </form>
                 </td>
@@ -109,16 +107,21 @@
             <% }%>    
         </tbody>
 
+
+
+
+
+
         <script src="js/JQuery.js"></script>
         <script>
                             function confirmacion() {
                                 $('#eliminacion').submit(function () {
                                     var seleccion = $("#datos").val();
-                                    
-                                    var r = confirm("Seguro que quiere eliminar a " + seleccion);
-                                    if(r){
+
+                                    var r = confirm("Seguro que quiere eliminar a " + seleccion+"?");
+                                    if (r) {
                                         return true;
-                                    }else if(!r){
+                                    } else if (!r) {
                                         return false;
                                     }
                                     // return r; si se apreto cancelar es falso y no pasa nada, si es true se hace el submit

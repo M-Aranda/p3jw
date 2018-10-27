@@ -6,7 +6,7 @@
 
 package Controller;
 
-import Model.DAO.DAO_ClaseAlumnoAlternativa;
+import Model.DAO.DAO_Alumno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -37,9 +37,9 @@ public class EliminarAlumnoServlet extends HttpServlet {
         try {
             response.setCharacterEncoding("UTF-8");
             
-            DAO_ClaseAlumnoAlternativa dca= new DAO_ClaseAlumnoAlternativa() ;
+            DAO_Alumno da= new DAO_Alumno() ;
             int idAlumnoAEliminar=Integer.parseInt(request.getParameter("id"));
-            dca.delete(idAlumnoAEliminar);
+            da.delete(idAlumnoAEliminar);
             response.sendRedirect("index.jsp");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EliminarAlumnoServlet.class.getName()).log(Level.SEVERE, null, ex);

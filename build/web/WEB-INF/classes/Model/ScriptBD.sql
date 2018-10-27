@@ -80,7 +80,7 @@ INNER JOIN
 	ciudad c ON c.id = a.fk_ciudad
 ORDER BY
 	c.nombre DESC;
-
+    
 /*6.- Eliminar a un alumno por id*/
 DELETE FROM alumno WHERE id = '';
 

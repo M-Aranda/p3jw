@@ -38,6 +38,7 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
 
         Alumno a = null;
         while (rs.next()) {
+
             a = new Alumno();
             a.setId(rs.getInt(1));
             a.setNombre(rs.getString(2));
@@ -55,6 +56,8 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
                 c.setNombre(buscaIdCiudad.getString(2));
                 a.setCiu(c);
             }
+
+            lista.add(a);
 
         }
 
@@ -137,6 +140,116 @@ public class DAO_Alumno extends Conexion implements DAO<Alumno> {
         }
         close();
         return cant;
+    }
+
+    public List<Alumno> listarPorNombre(String orden) throws SQLException {
+        List<Alumno> lista = new ArrayList<Alumno>();
+        ResultSet rs = ejecutar("SELECT * FROM  alumno ORDER BY nombre " + orden + "");
+
+        Alumno a = null;
+        while (rs.next()) {
+            a = new Alumno();
+            a.setId(rs.getInt(1));
+            a.setNombre(rs.getString(2));
+            a.setEsHombre(rs.getBoolean(3));
+            a.setTelefono(rs.getString(4));
+            a.setCorreo(rs.getString(5));
+
+            int idCiudad = rs.getInt(6);
+            ResultSet buscaIdCiudad = ejecutar("SELECT * FROM ciudad WHERE id=" + idCiudad + "; ");
+
+            Ciudad c = null;
+            while (buscaIdCiudad.next()) {
+                c = new Ciudad();
+                c.setId(buscaIdCiudad.getInt(1));
+                c.setNombre(buscaIdCiudad.getString(2));
+                a.setCiu(c);
+            }
+
+            lista.add(a);
+        }
+
+        return lista;
+    }
+
+    public List<Alumno> listarPorCiudad(String orden) throws SQLException {
+        List<Alumno> lista = new ArrayList<Alumno>();
+        ResultSet rs = ejecutar("SELECT \n"
+                + "	a.id AS 'ID',\n"
+                + "	a.nombre AS 'Nombre',\n"
+                + "    a.genero AS 'Género',\n"
+                + "    a.telefono AS 'Telefono',\n"
+                + "    a.correo AS 'Correo',\n"
+                + "    c.id AS 'id Ciudad'\n"
+                + "FROM\n"
+                + "	alumno a\n"
+                + "INNER JOIN\n"
+                + "	ciudad c ON c.id = a.fk_ciudad\n"
+                + "ORDER BY\n"
+                + "	c.nombre " + orden + ";");
+
+        Alumno a = null;
+        while(rs.next()){
+             a = new Alumno();
+        a.setId(rs.getInt(1));
+        a.setNombre(rs.getString(2));
+        int valorGenero = rs.getInt(3);
+
+        if (valorGenero == 1) {
+            a.setEsHombre(true);
+        } else if (valorGenero == 0) {
+            a.setEsHombre(false);
+        }
+
+        a.setTelefono(rs.getString(4));
+        a.setCorreo(rs.getString(5));
+
+        int idCiudad = rs.getInt(6);
+        ResultSet buscaIdCiudad = ejecutar("SELECT * FROM ciudad WHERE id=" + idCiudad + "; ");
+
+        Ciudad c = null;
+        while (buscaIdCiudad.next()) {
+            c = new Ciudad();
+            c.setId(buscaIdCiudad.getInt(1));
+            c.setNombre(buscaIdCiudad.getString(2));
+            a.setCiu(c);
+        }
+        lista.add(a);
+            
+        }
+
+        return lista;
+    }
+
+    public Alumno getAlumnoPorId(int id) throws SQLException {
+
+        ResultSet rs = ejecutar("SELECT * FROM alumno WHERE id=" + id + ";");
+
+        Alumno a = null;
+        while (rs.next()) {
+
+            a = new Alumno();
+            a.setId(rs.getInt(1));
+            a.setNombre(rs.getString(2));
+            a.setEsHombre(rs.getBoolean(3));
+            a.setTelefono(rs.getString(4));
+            a.setCorreo(rs.getString(5));
+
+            int idCiudad = rs.getInt(6);
+            ResultSet buscaIdCiudad = ejecutar("SELECT * FROM ciudad WHERE id=" + idCiudad + "; ");
+
+            Ciudad c = null;
+            while (buscaIdCiudad.next()) {
+                c = new Ciudad();
+                c.setId(buscaIdCiudad.getInt(1));
+                c.setNombre(buscaIdCiudad.getString(2));
+                a.setCiu(c);
+            }
+
+        }
+
+        close();
+        return a;
     }
 
 }
